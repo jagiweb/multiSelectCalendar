@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="mendix.multidatecalendarwidget.MultiDateCalendarWidget" pluginWidget="true" needsEntityContext="true" offlineCapable="true"
+        supportedPlatform="Web"
+        xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+    <name>Multi Date Calendar Widget</name>
+    <description>My widget description</description>
+    <icon/>
+    <properties>
+        <propertyGroup caption="General">
+            <property key="daysArray" type="attribute" required="true">
+                <caption>Array of Days</caption>
+                <description>Array of days sent by the widget</description>
+                <attributeTypes>
+                    <attributeType name="String" />    
+                </attributeTypes>
+            </property>
+            <property key="numberOfDays" type="attribute" required="true">
+                <caption>Number of days</caption>
+                <description>Total amount of selected days</description>
+                <attributeTypes>
+                    <attributeType name="Integer" />    
+                </attributeTypes>
+            </property>
+
+            <property key="reservedDates" type="datasource" isList="true" required="false">
+                <caption>Booked dates</caption>
+                <description />
+            </property>
+            
+            <property key="day" type="attribute" required="false" dataSource="reservedDates">
+                <caption>Some attribute</caption>
+                <description>The attribute of the data source.</description>
+                <attributeTypes>
+                    <attributeType name="String"/>
+                </attributeTypes>
+            </property>
+                        
+            <property key="numberOfMonths" defaultValue="1" type="integer">
+                <caption>Number of months</caption>
+                <description>Number of months for calendar</description>
+            </property>
+            
+            <property key="multiSelection" type="boolean" defaultValue="false">
+                <caption>Multi selection of dates</caption>
+                <description>This option will allow you to select multiple dates at once</description>
+            </property>
+
+            <property key="weekendDisabled" type="boolean" defaultValue="false">
+                <caption>Disable weekends</caption>
+                <description>This option will allow you to disable weekends in your calendar</description>
+            </property>
+        </propertyGroup>
+         <propertyGroup caption="Custom colors">
+            <property key="selectedColor" type="enumeration" defaultValue="default">
+                <caption>Selected date color</caption>
+                <description>Select a color for your selected dates in the calendar</description>
+                <enumerationValues>
+                    <enumerationValue key="default">Default</enumerationValue>
+                    <enumerationValue key="red">Red</enumerationValue>
+                    <enumerationValue key="green">Green</enumerationValue>
+                    <enumerationValue key="blue">Blue</enumerationValue>
+                    <enumerationValue key="purple">Purple</enumerationValue>
+                    <enumerationValue key="teal">Teal</enumerationValue>
+                </enumerationValues>
+            </property>
+
+            <property key="bgColor" type="enumeration" defaultValue="default">
+                <caption>Calendar background color</caption>
+                <description>Select a color for your background in the calendar</description>
+                <enumerationValues>
+                    <enumerationValue key="default">Default</enumerationValue>
+                    <enumerationValue key="dark">Dark</enumerationValue>
+                    <enumerationValue key="brown">Brown</enumerationValue>
+                    <enumerationValue key="gray">Gray</enumerationValue>
+                </enumerationValues>
+            </property>
+        </propertyGroup>
+    </properties>
+</widget>
