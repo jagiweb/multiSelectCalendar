@@ -9,15 +9,15 @@
     <properties>
         <propertyGroup caption="General">
             <property key="daysArray" type="attribute" required="true">
-                <caption>Array of Days</caption>
-                <description>Array of days sent by the widget</description>
+                <caption>List of Days</caption>
+                <description>List of days sent by the widget. This list of days have to be a string. For more info please check the documentation.</description>
                 <attributeTypes>
                     <attributeType name="String" />    
                 </attributeTypes>
             </property>
             <property key="numberOfDays" type="attribute" required="true">
                 <caption>Number of days</caption>
-                <description>Total amount of selected days</description>
+                <description>Total amount of selected days. This must be an integer.</description>
                 <attributeTypes>
                     <attributeType name="Integer" />    
                 </attributeTypes>
@@ -25,12 +25,12 @@
 
             <property key="reservedDates" type="datasource" isList="true" required="false">
                 <caption>Booked dates</caption>
-                <description />
+                <description>Only if you want to keep track of the days that has been already created in the calendar.</description>
             </property>
             
             <property key="day" type="attribute" required="false" dataSource="reservedDates">
-                <caption>Some attribute</caption>
-                <description>The attribute of the data source.</description>
+                <caption>Days attribute (string)</caption>
+                <description>Day attribute as a string to send back to widget.</description>
                 <attributeTypes>
                     <attributeType name="String"/>
                 </attributeTypes>

@@ -27,9 +27,7 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
     const [value, setValue] = useState([]);
     const [bookedDates, setBookedDates] = useState([]);
     // format='MM DD YYYY' 
-    console.log(daysArray)
-    console.log(numberOfDays)
-    console.log(reservedDates)
+
     useEffect(() => {
       if(daysArray.status === "available") {
         daysArray.setValue(value.toString());
@@ -48,12 +46,11 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
           let dayValue = day.get(item).value;
           dayValue = dayValue.replace("," , "")
           let dayNewFormat = moment(dayValue, 'DD/MM/YYYY').format('MM DD YYYY')
-          // console.log(dayNewFormat)
           dayValue = new DateObject(new Date(Date.parse(dayNewFormat)))
-          array.push(dayValue.day)
+          array.push(dayValue)
+          bookedDates.push(`${dayValue.day}/${dayValue.month}/${dayValue.year}`)
         }
       })
-      setBookedDates(array)
     }}, [reservedDates])
   
       return (
@@ -68,6 +65,9 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
           numberOfMonths={numberOfMonths} 
   
           mapDays={({ date }) => { 
+            let calendarDate = `${date.day}/${date.month}/${date.year}`
+            let booked = bookedDates.includes(calendarDate)
+
             if (weekendDisabled){
               let isWeekend = [0, 6].includes(date.weekDay.index)
               if (isWeekend) return {
@@ -75,10 +75,7 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
                 style: { color: "#7d7c7c" }
               }
             }
-  
-            let booked = bookedDates.includes(date.dayOfYear)
-            // console.log(booked)
-            console.log(bookedDates)
+
             if (booked) return {
               disabled: true, 
               style: { color: "green" },
@@ -88,11 +85,10 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
           className={selectedColor + " bg-" + bgColor}
           plugins={[
             <DatePanel />,
-            <DatePickerHeader 
-            position="top" 
-            size="medium" 
-          />,
-            <Legend />
+            // <DatePickerHeader 
+            // position="top" 
+            // size="small" />,
+            // <Legend position="left" />
            ]}
           />
         </Fragment>
