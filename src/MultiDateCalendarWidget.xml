@@ -9,30 +9,10 @@
     <properties>
         <propertyGroup caption="General">
             <property key="daysArray" type="attribute" required="true">
-                <caption>List of Days</caption>
+                <caption>List of selected dates</caption>
                 <description>List of days sent by the widget. This list of days have to be a string. For more info please check the documentation.</description>
                 <attributeTypes>
                     <attributeType name="String" />    
-                </attributeTypes>
-            </property>
-            <property key="numberOfDays" type="attribute" required="true">
-                <caption>Number of days</caption>
-                <description>Total amount of selected days. This must be an integer.</description>
-                <attributeTypes>
-                    <attributeType name="Integer" />    
-                </attributeTypes>
-            </property>
-
-            <property key="reservedDates" type="datasource" isList="true" required="false">
-                <caption>Booked dates</caption>
-                <description>Only if you want to keep track of the days that has been already created in the calendar.</description>
-            </property>
-            
-            <property key="day" type="attribute" required="false" dataSource="reservedDates">
-                <caption>Days attribute (string)</caption>
-                <description>Day attribute as a string to send back to widget.</description>
-                <attributeTypes>
-                    <attributeType name="String"/>
                 </attributeTypes>
             </property>
                         
@@ -50,7 +30,36 @@
                 <caption>Disable weekends</caption>
                 <description>This option will allow you to disable weekends in your calendar</description>
             </property>
+
+            <property key="mobileVersion" type="boolean" defaultValue="false">
+                <caption>Mobile version</caption>
+                <description>This option will allow you to enable the calendar for mobile version</description>
+            </property>
         </propertyGroup>
+        <!-- OPTIONAL PROPERTIES -->
+        <propertyGroup caption="Optional">
+            <property key="reservedDates" type="datasource" isList="true" required="false">
+                <caption>Unselectable dates</caption>
+                <description>Only if you want to keep track of the days that has been already created in the calendar.</description>
+            </property>
+            
+            <property key="day" type="attribute" required="false" dataSource="reservedDates">
+                <caption>Day</caption>
+                <description>Day attribute as a string to send back to widget.</description>
+                <attributeTypes>
+                    <attributeType name="String"/>
+                </attributeTypes>
+            </property>
+            
+            <property key="closeDay" type="attribute" required="false" dataSource="reservedDates">
+                <caption>Day close?</caption>
+                <description>Determine if the day is close or requested</description>
+                <attributeTypes>
+                    <attributeType name="Boolean"/>
+                </attributeTypes>
+            </property>
+        </propertyGroup>
+
          <propertyGroup caption="Custom colors">
             <property key="selectedColor" type="enumeration" defaultValue="default">
                 <caption>Selected date color</caption>

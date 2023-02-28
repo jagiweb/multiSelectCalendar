@@ -10,7 +10,7 @@
   },
   "license": "Apache-2.0",
   "config": {
-    "projectPath": "/mnt/c/Users/Javier/Documents/Mendix/Widget-Test-App-main",
+    "projectPath": "/mnt/c/Users/Javier/Documents/Mendix/MxOfficeCapacity-main",
     "mendixHost": "http://localhost:8080",
     "developmentPort": 3000
   },
