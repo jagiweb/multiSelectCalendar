@@ -20,6 +20,16 @@
                 <caption>Number of months</caption>
                 <description>Number of months for calendar</description>
             </property>
+
+            <property key="startingDay" defaultValue="0" type="integer">
+                <caption>First selectable day</caption>
+                <description>First selectable day in the calendar. Example: 0 = today, 1 = tomorrow</description>
+            </property>
+
+            <property key="lastDay" defaultValue="0" type="integer">
+                <caption>Last selectable day</caption>
+                <description>Last selectable day in the calendar. Example: 0 = all year, 1 = tomorrow, 30 = 30 days</description>
+            </property>
             
             <property key="multiSelection" type="boolean" defaultValue="false">
                 <caption>Multi selection of dates</caption>
@@ -35,10 +45,11 @@
                 <caption>Mobile version</caption>
                 <description>This option will allow you to enable the calendar for mobile version</description>
             </property>
+            
         </propertyGroup>
         <!-- OPTIONAL PROPERTIES -->
         <propertyGroup caption="Optional">
-            <property key="reservedDates" type="datasource" isList="true" required="false">
+            <!-- <property key="reservedDates" type="datasource" isList="true" required="false">
                 <caption>Unselectable dates</caption>
                 <description>Only if you want to keep track of the days that has been already created in the calendar.</description>
             </property>
@@ -57,7 +68,24 @@
                 <attributeTypes>
                     <attributeType name="Boolean"/>
                 </attributeTypes>
+            </property> -->
+            <property key="reservedDates" type="attribute" required="false">
+                <caption>Requested dates</caption>
+                <description>Progress percentage</description>
+                <attributeTypes>
+                    <attributeType name="String"/>
+                    <!-- <attributeType name="Boolean"/> -->
+                </attributeTypes>
             </property>
+            <property key="closeDay" type="attribute" required="false">
+                <caption>Unselectable dates</caption>
+                <description>Progress percentage</description>
+                <attributeTypes>
+                    <attributeType name="String"/>
+                    <!-- <attributeType name="Boolean"/> -->
+                </attributeTypes>
+            </property>
+            
         </propertyGroup>
 
          <propertyGroup caption="Custom colors">

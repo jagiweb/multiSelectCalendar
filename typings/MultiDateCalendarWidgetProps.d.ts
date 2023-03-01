@@ -4,7 +4,7 @@
  * @author Mendix Widgets Framework Team
  */
 import { CSSProperties } from "react";
-import { EditableValue, ListValue, ListAttributeValue } from "mendix";
+import { EditableValue } from "mendix";
 
 export type SelectedColorEnum = "default" | "red" | "green" | "blue" | "purple" | "teal";
 
@@ -17,12 +17,13 @@ export interface MultiDateCalendarWidgetContainerProps {
     tabIndex?: number;
     daysArray: EditableValue<string>;
     numberOfMonths: number;
+    startingDay: number;
+    lastDay: number;
     multiSelection: boolean;
     weekendDisabled: boolean;
     mobileVersion: boolean;
-    reservedDates?: ListValue;
-    day?: ListAttributeValue<string>;
-    closeDay?: ListAttributeValue<boolean>;
+    reservedDates?: EditableValue<string>;
+    closeDay?: EditableValue<string>;
     selectedColor: SelectedColorEnum;
     bgColor: BgColorEnum;
 }
@@ -38,11 +39,12 @@ export interface MultiDateCalendarWidgetPreviewProps {
     readOnly: boolean;
     daysArray: string;
     numberOfMonths: number | null;
+    startingDay: number | null;
+    lastDay: number | null;
     multiSelection: boolean;
     weekendDisabled: boolean;
     mobileVersion: boolean;
-    reservedDates: {} | { type: string } | null;
-    day: string;
+    reservedDates: string;
     closeDay: string;
     selectedColor: SelectedColorEnum;
     bgColor: BgColorEnum;

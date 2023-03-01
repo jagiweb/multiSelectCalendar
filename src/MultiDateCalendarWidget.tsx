@@ -21,20 +21,22 @@ import { Alert } from "./components/Alert";
 
 
 export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetContainerProps){
-    const {daysArray, numberOfDays, numberOfMonths, multiSelection, weekendDisabled, selectedColor, bgColor, reservedDates, day, mobileVersion, closeDay} = props
+    const {lastDay, startingDay, daysArray, numberOfMonths, multiSelection, weekendDisabled, selectedColor, bgColor, reservedDates, day, mobileVersion, closeDay} = props
     const validationFeedback = props.daysArray.validation;
-    let tomorrow = new Date()
-    let lastDay = new Date()
+    let firstSelectableDate = new Date()
+    let lastestDay = 0
     let classString:string = ''
-    let dayAfterTomorrow = new Date()
-    tomorrow.setDate(tomorrow.getDate() + 1)
-    lastDay.setDate(lastDay.getDate() + 30)
-    dayAfterTomorrow.setDate(tomorrow.getDate() + 1)
-    const [value, setValue] = useState([tomorrow]);
+    firstSelectableDate.setDate(firstSelectableDate.getDate() + startingDay)
+    
+    const [value, setValue] = useState([firstSelectableDate]);
     const [bookedDates, setBookedDates] = useState([]);
     const [closedDates, setClosedDates] = useState([]);
-    // format='MM DD YYYY' 
 
+    if (lastDay > 0){
+      lastestDay = new Date()
+      lastestDay.setDate(lastestDay.getDate() + lastDay)
+    }
+      
     const convertDateToJson = (dates) => {
       let array = []
       dates.map( date => {
@@ -65,23 +67,24 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
     if(reservedDates?.status === "available"){
       let requestedList:any = []
       // let closedDaysListclosedDaysList:any = []
-      console.log(closeDay)
-      reservedDates.items && reservedDates?.items.map( item => {
-        if(day && item && closeDay !== undefined){
-          let dayValue:any = day.get(item).value;
-          let closeValue:any = closeDay.get(item).value;
+      console.log('requested days ' reservedDates.value)
+      console.log('close days ' + closeDay?.value)
+      // reservedDates.items && reservedDates?.items.map( item => {
+      //   if(day && item && closeDay !== undefined){
+      //     let dayValue:any = day.get(item).value;
+      //     let closeValue:any = closeDay.get(item).value;
           
-          let dayNewFormat = moment(dayValue, 'MM DD YYYY').format('MM DD YYYY')
-          dayValue = new DateObject(new Date(Date.parse(dayNewFormat)))
-          if (closeValue){
-            closedDates.push(`${dayValue.day}/${dayValue.month}/${dayValue.year}`)
-          }else{
-            requestedList.push(dayValue)
-            bookedDates.push(`${dayValue.day}/${dayValue.month}/${dayValue.year}`)
-          }
+      //     let dayNewFormat = moment(dayValue, 'MM DD YYYY').format('MM DD YYYY')
+      //     dayValue = new DateObject(new Date(Date.parse(dayNewFormat)))
+      //     if (closeValue){
+      //       closedDates.push(`${dayValue.day}/${dayValue.month}/${dayValue.year}`)
+      //     }else{
+      //       requestedList.push(dayValue)
+      //       bookedDates.push(`${dayValue.day}/${dayValue.month}/${dayValue.year}`)
+      //     }
           
-        }
-      })
+      //   }
+      // })
     }}, [reservedDates])
 
     // useEffect(() =>{
@@ -114,10 +117,10 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
           onChange={setValue} 
           multiple={multiSelection} 
           format='DD/MM/YYYY' 
-          minDate={tomorrow}
-          maxDate={lastDay}
+          minDate={firstSelectableDate}
+          maxDate={lastestDay}
           numberOfMonths={numberOfMonths}         
-          formatWeekDay={(day: string) => day.substring(0,3)}
+          // formatWeekDay={(day: string) => day.substring(0,3)}
           mapDays={({ date }) => { 
             let calendarDate = `${date.day}/${date.month}/${date.year}`
             let booked = bookedDates.includes(calendarDate)
