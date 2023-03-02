@@ -1,14 +1,46 @@
-/*
-Place your custom CSS here
-*/
-/* .widget-hello-world {
-
-} */
-
 .legend-green{
     color: white;
     background-color: red;
     padding: 20px;
 }
-/* .legend-gray{}
-.legend-red{} */
+
+.black-remove .b-deselect{
+    color: black;
+}
+
+.input-margin{
+    margin-bottom: 10px;
+}
+
+.daylist-container{
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% + 4px);
+
+}
+
+.selected-date-cl{
+    margin-right: 4px;
+    padding: 5px;
+    border: 2px solid #bbd6ff;
+    background-color: #bbd6ff;
+    border-radius: 3px;
+    color: #099cec;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    margin-bottom: 5px;
+    flex-basis: calc(20% - 4px); 
+}
+
+.office-closed{
+    color: rgb(255, 68, 68);
+    font-weight: bold;
+    border: 2px solid rgb(255, 68, 68);
+}
+
+.booked-days{
+    color: rgb(0, 128, 77);
+    font-weight: bold;
+    border: 2px solid rgb(0, 128, 77);
+}

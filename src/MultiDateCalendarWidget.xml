@@ -49,40 +49,18 @@
         </propertyGroup>
         <!-- OPTIONAL PROPERTIES -->
         <propertyGroup caption="Optional">
-            <!-- <property key="reservedDates" type="datasource" isList="true" required="false">
-                <caption>Unselectable dates</caption>
-                <description>Only if you want to keep track of the days that has been already created in the calendar.</description>
-            </property>
-            
-            <property key="day" type="attribute" required="false" dataSource="reservedDates">
-                <caption>Day</caption>
-                <description>Day attribute as a string to send back to widget.</description>
-                <attributeTypes>
-                    <attributeType name="String"/>
-                </attributeTypes>
-            </property>
-            
-            <property key="closeDay" type="attribute" required="false" dataSource="reservedDates">
-                <caption>Day close?</caption>
-                <description>Determine if the day is close or requested</description>
-                <attributeTypes>
-                    <attributeType name="Boolean"/>
-                </attributeTypes>
-            </property> -->
             <property key="reservedDates" type="attribute" required="false">
                 <caption>Requested dates</caption>
-                <description>Progress percentage</description>
+                <description>JSON list of requested days to make those dates unselectable</description>
                 <attributeTypes>
                     <attributeType name="String"/>
-                    <!-- <attributeType name="Boolean"/> -->
                 </attributeTypes>
             </property>
             <property key="closeDay" type="attribute" required="false">
                 <caption>Unselectable dates</caption>
-                <description>Progress percentage</description>
+                <description>JSON list of office closed days to make those dates unselectable</description>
                 <attributeTypes>
                     <attributeType name="String"/>
-                    <!-- <attributeType name="Boolean"/> -->
                 </attributeTypes>
             </property>
             
