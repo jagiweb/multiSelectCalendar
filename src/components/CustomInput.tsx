@@ -3,7 +3,7 @@ import '../ui/MultiDateCalendarWidget.css'
 
 function CustomInput(props:any) {
     const {openCalendar, value} = props
-
+    value.sort()
   return (
     <Fragment>
         <div>

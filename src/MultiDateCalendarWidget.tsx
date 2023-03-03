@@ -27,6 +27,7 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
     let firstSelectableDate = new Date()
     let lastestDay = 0
     let classString:string = ''
+    let regex = /\[]/i;
     firstSelectableDate.setDate(firstSelectableDate.getDate() + startingDay)
     
     const [value, setValue] = useState([]);
@@ -59,24 +60,22 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
       // creating an array and reseting the value of bookedDates
       let listOfBookedDays = []
       setBookedDates(listOfBookedDays)
-      if (reservedDates.value !== undefined){
-        let requestedList:any =  reservedDates.value.replace("[", '').replace(']','')
+      // console.log(Array.from(reservedDates.value))
+      if (reservedDates.value !== undefined && reservedDates.value.includes("[") && reservedDates.value.includes("]")){
+        let requestedList:any =  JSON.parse(reservedDates.value);
         // As we are receiving an string of jsons inside of an array, if the value is empty we will still see "[]", in that case we replace it and check if the string is empty or not.
-        if (requestedList !== ""){
+        if (requestedList.length > 0){
           // if the string is not empty then we convert it into an array of string of "JSON's"
-          requestedList = requestedList.split(',')
           requestedList.map( item => {
               // As each item is an string of a JSON, we must convert it into an actual JSON or Object
-              let dayValue:any = JSON.parse(item);
-              dayValue = dayValue.date
-              // the format of the date is not a valid format for javascript, library "moment" helps to convert from one format to another
+              let dayValue = item.date
+              // // the format of the date is not a valid format for javascript, library "moment" helps to convert from one format to another
               let dayNewFormat = moment(dayValue, 'DD/MM/YYYY').format('MM DD YYYY')
-              // Here we make sure that the value can be converted into a real date.
+              // // Here we make sure that the value can be converted into a real date.
               dayValue = new DateObject(new Date(Date.parse(dayNewFormat)))
-              listOfBookedDays.push(`${dayValue.day}/${dayValue.month}/${dayValue.year}`)
+              listOfBookedDays.push({"date": `${dayValue.day}/${dayValue.month}/${dayValue.year}`, "reason": `${item.reason}`})
           })
         }
-        
       }
     }}, [reservedDates])
     ////////////////   Close days list /////////////
@@ -85,25 +84,23 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
         // creating an array and reseting the value of closedDays
         let listOfClosedDays = []
         setClosedDates(listOfClosedDays)
-        if (closeDay.value !== undefined){
-          let closedDaysListofJson:any =  closeDay.value.replace("[", '').replace(']','')
+        if (closeDay.value !== undefined && closeDay.value.includes("[") && closeDay.value.includes("]")){
+          let closedDaysListofJson:any = JSON.parse(closeDay.value);
           // As we are receiving an string of jsons inside of an array, if the value is empty we will still see "[]", in that case we replace it and check if the string is empty or not.
-          if (closedDaysListofJson !== ""){
+          if (closedDaysListofJson.length > 0){
             // if the string is not empty then we convert it into an array of string of "JSON's"
-            closedDaysListofJson = closedDaysListofJson.split(',')
             closedDaysListofJson.map( item => {
               // As each item is an string of a JSON, we must convert it into an actual JSON or Object
-                let dayValue:any = JSON.parse(item);
-                dayValue = dayValue.date
-                // the format of the date is not a valid format for javascript, library "moment" helps to convert from one format to another
+                let dayValue = item.date
+                // // the format of the date is not a valid format for javascript, library "moment" helps to convert from one format to another
                 let dayNewFormat = moment(dayValue, 'DD/MM/YYYY').format('MM DD YYYY')
-                // Here we make sure that the value can be converted into a real date.
+                // // Here we make sure that the value can be converted into a real date.
                 dayValue = new DateObject(new Date(Date.parse(dayNewFormat)))
-                // we push the dates as an string so we can compare this dates with the date of the calendar
-                listOfClosedDays.push(`${dayValue.day}/${dayValue.month}/${dayValue.year}`)
+                // // we push the dates as an string so we can compare this dates with the date of the calendar
+                // listOfClosedDays.push(`${dayValue.day}/${dayValue.month}/${dayValue.year}`)
+                listOfClosedDays.push({"date": `${dayValue.day}/${dayValue.month}/${dayValue.year}`, "reason": `${item.reason}`})
             })
           }
-          
         }
       }}, [closeDay])
 
@@ -125,11 +122,24 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
           format='DD/MM/YYYY' 
           minDate={firstSelectableDate}
           maxDate={lastestDay}
-          numberOfMonths={numberOfMonths}         
+          numberOfMonths={numberOfMonths}  
+          mobileLabels={{
+            "OK": "Confirm",
+            "CANCEL": "Close",
+          }}       
           mapDays={({ date }) => { 
             let calendarDate = `${date.day}/${date.month}/${date.year}`
-            let booked = bookedDates.includes(calendarDate)
-            let closed = closedDates.includes(calendarDate)
+            let closedReason = ''
+            let bookedReason = ''
+            let booked = bookedDates.find(key =>{ if (key.date === calendarDate){
+              bookedReason = key.reason 
+              return true
+            }})
+            let closed = closedDates.find(key =>{ if (key.date === calendarDate){
+              closedReason = key.reason 
+              return true
+            }})
+            
 
             if (weekendDisabled){
               let isWeekend = [0, 6].includes(date.weekDay.index)
@@ -141,13 +151,13 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
             // bookedDays list represented in the calendar as the style below
             if (booked) return {
               disabled: true, 
-              title: "Day already booked",
+              title: bookedReason,
               class: "booked-days"
             }
             // closedDays list represented in the calendar as the style below
-            if (closed) return {
+            if (closed && closedReason !== '') return {
               disabled: true, 
-              title: "Office is closed",
+              title: closedReason,
               class: "office-closed"
             }
 
