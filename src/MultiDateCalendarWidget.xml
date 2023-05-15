@@ -9,7 +9,7 @@
     <properties>
         <propertyGroup caption="General">
             <property key="daysArray" type="attribute" required="true">
-                <caption>List of selected dates</caption>
+                <caption>JSON of selected dates</caption>
                 <description>List of days sent by the widget. This list of days have to be a string. For more info please check the documentation.</description>
                 <attributeTypes>
                     <attributeType name="String" />    

@@ -1,6 +1,5 @@
 import { createElement, Fragment, useEffect, useState } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
-import DatePickerHeader from "react-multi-date-picker/plugins/date_picker_header"
 import DatePanel from "react-multi-date-picker/plugins/date_panel"
 import "react-multi-date-picker/styles/colors/green.css"
 import "react-multi-date-picker/styles/colors/red.css"
@@ -11,10 +10,8 @@ import "react-multi-date-picker/styles/backgrounds/bg-dark.css"
 import "react-multi-date-picker/styles/backgrounds/bg-gray.css"
 import "react-multi-date-picker/styles/backgrounds/bg-brown.css"
 import "react-multi-date-picker/styles/layouts/mobile.css"
-import Big from "big.js";
 import moment from "moment";
 import "./ui/MultiDateCalendarWidget.css";
-import Legend from "./components/Legend";
 import { MultiDateCalendarWidgetContainerProps } from "../typings/MultiDateCalendarWidgetProps";
 import { Alert } from "./components/Alert";
 import CustomInput from "./components/CustomInput";
@@ -27,7 +24,6 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
     let firstSelectableDate = new Date()
     let lastestDay = 0
     let classString:string = ''
-    let regex = /\[]/i;
     firstSelectableDate.setDate(firstSelectableDate.getDate() + startingDay)
     
     const [value, setValue] = useState([]);
@@ -67,12 +63,15 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
         if (requestedList.length > 0){
           // if the string is not empty then we convert it into an array of string of "JSON's"
           requestedList.map( item => {
+            
               // As each item is an string of a JSON, we must convert it into an actual JSON or Object
               let dayValue = item.date
               // // the format of the date is not a valid format for javascript, library "moment" helps to convert from one format to another
-              let dayNewFormat = moment(dayValue, 'DD/MM/YYYY').format('MM DD YYYY')
+              let dayNewFormat = moment(dayValue, 'DD/MM/YYYY').format('YYYY-MM-DDThh:mm:ss.sZ')
               // // Here we make sure that the value can be converted into a real date.
-              dayValue = new DateObject(new Date(Date.parse(dayNewFormat)))
+              console.log(dayNewFormat)
+              dayValue = new DateObject(new Date(dayNewFormat))
+              console.log(dayValue.toString())
               listOfBookedDays.push({"date": `${dayValue.day}/${dayValue.month}/${dayValue.year}`, "reason": `${item.reason}`})
           })
         }
@@ -93,11 +92,10 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
               // As each item is an string of a JSON, we must convert it into an actual JSON or Object
                 let dayValue = item.date
                 // // the format of the date is not a valid format for javascript, library "moment" helps to convert from one format to another
-                let dayNewFormat = moment(dayValue, 'DD/MM/YYYY').format('MM DD YYYY')
+                let dayNewFormat = moment(dayValue, 'DD/MM/YYYY').format('YYYY-MM-DDThh:mm:ss.sZ')
                 // // Here we make sure that the value can be converted into a real date.
-                dayValue = new DateObject(new Date(Date.parse(dayNewFormat)))
+                dayValue = new DateObject(new Date(dayNewFormat))
                 // // we push the dates as an string so we can compare this dates with the date of the calendar
-                // listOfClosedDays.push(`${dayValue.day}/${dayValue.month}/${dayValue.year}`)
                 listOfClosedDays.push({"date": `${dayValue.day}/${dayValue.month}/${dayValue.year}`, "reason": `${item.reason}`})
             })
           }
@@ -112,7 +110,6 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
 
       return (
         <Fragment>
-  
           <DatePicker 
           render={<CustomInput />}
           weekStartDayIndex={1}
@@ -149,33 +146,30 @@ export default function MultiDateCalendarWidget(props: MultiDateCalendarWidgetCo
               }
             }
             // bookedDays list represented in the calendar as the style below
-            if (booked) return {
+            if (booked){
+            console.log('booked days all '+ booked)
+            return {
               disabled: true, 
               title: bookedReason,
               class: "booked-days"
-            }
+            }}
             // closedDays list represented in the calendar as the style below
-            if (closed && closedReason !== '') return {
+            if (closed && closedReason !== ''){
+            console.log('closed days all '+ closed)
+            return {
               disabled: true, 
               title: closedReason,
               class: "office-closed"
-            }
+            }} 
 
 
           }}
-          
           className = {classString}
-          
-          
           plugins={[
             <DatePanel 
               className="black-remove"
               sort="date"
             />,            
-            // <DatePickerHeader 
-            // position="top" 
-            // size="small" />,
-            // <Legend position="left" />
            ]}
           />
           <Alert>{validationFeedback}</Alert>
